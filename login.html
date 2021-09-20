@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./assets/css/login.css">
+    <title>Login</title>
+</head>
+<body onload="resetLogged()">
+    <!-- login -->
+    <div class="login-page">
+        <div class="login-success" style="  display:none;">
+            <div>
+            </div>
+        </div>
+        <div class="login-fail" style="  display:none;">
+            <div>
+            </div>
+        </div>
+        <div class="login-box login">
+            <div class="login-header">
+                <h1>Login Form</h1>
+            </div>
+            <div class="login-input">
+                <div class="account">
+                    <input class="account-input" onblur="checkName(this)" name="account" type="text" required placeholder="UserName">
+                    <span class = "wrong-message">!Username must have at least 6 characters</span>
+                </div>
+                <div class="password">
+                    <input class="password-input" onblur="checkPassword(this)" name="password" id="password" type="password" required placeholder="Password">
+                    <span class = "wrong-message">!Password must be at least 8 characters</span>
+                </div> 
+                  
+            </div>
+           
+            <button class="login-button" onclick="submitLogin()">Login</button>
+            <div class="sign-up">
+                <h5 class="sign-up-button" onclick="showSignup()">Not a member? Create one!</h5>
+            </div>  
+        </div>
+        
+    </div>
+    <!-- sign up -->
+    <div class="login-page">
+        <div class="login-box signup">
+            <div class="login-header">
+                <h1>Sign Up</h1>
+            </div>
+            <div class="login-input">
+                <div class="account">
+                    <input class="account-input" onblur="checkName(this)" name="account" type="text" required placeholder="UserName">
+                    <span class = "wrong-message">!Username must have at least 6 characters</span>
+                    <br>
+                </div>
+                <div class="password">
+                    <input class="password-input-signup" onblur="checkPassword(this)" name="password" type="password" required placeholder="PassWord">
+                    <span class = "wrong-message">!Password must be at least 8 characters</span>
+                </div>
+                <div class="password-confirm">
+                    <input class="password-confirm-input" onblur="checkPasswordConfirm(this)" name="password-confirm"  type="password" required placeholder="Confirm Password">
+                    <span class = "wrong-message">Confirm Password</span>
+                </div>
+                
+            </div>
+            <button onclick="submitAccount()">Sign Up</button>
+            <div class="sign-up" style="justify-content:flex-end">
+                <h5 onclick="returnLoginSignup()">Go Back Login</h5>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    <script src="./js/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="./assets/js/login.js"></script>
+</body>
+</html>

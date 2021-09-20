@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Todo App</title>
+</head>
+<body onload="checkLogged()" >
+  
+  <!-- <div class="user-infor-box"> 
+    <div class="user-infor"></div>
+      <h5 onclick="logout();">Đăng xuất</h5>
+  </div> -->
+  <div class="cont_principal">
+    <div class="cont_centrar">
+      <div class="cont_todo_list_top">
+          <div class="cont_titulo_cont">
+              <h3>THINGS TO DO</h3>
+          </div>
+          <div class="cont_add_titulo_cont">
+              <a href="#e" onclick="add_new()"><i class="fas fa-plus"></i></a>
+          </div>
+      </div>
+      <div class="user-infor-box">
+          <div class="user-infor"></div>
+          <h5 onclick="logout();">LOGOUT</h5>
+      </div>
+               <!--   End cont_todo_list_top  -->  
+      <div class="cont_crear_new">
+        <table class="table">
+          <tr>
+              <th>Action</th>
+              <th>Status</th>
+              <th>Deadline</th>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" class="input_title_desc" required/>      
+              <!-- End td 2 -->
+            </td>
+            <td>
+              <select name="" id="action_select" required>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+                <option value="Pause">Pause</option>
+              </select>
+                  <!-- End td 1 -->
+            </td>      
+            <td>
+              <input type="date" class="input_description_title"  id="date_select" required/>      
+            </td>
+          </tr>
+          <tr>
+            <th class="titl_description" >Description</th>
+          </tr>
+          <tr> 
+            <td colspan="3">
+              <input type="text" class="input_description" required />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+               <button class="btn_add_fin"  onclick="add_to_list()">ADD</button>
+            </td>
+          </tr>
+        </table>
+            <!--   End cont_crear_new  --> 
+      </div>
+
+      <div class="cont_princ_lists">
+        <ul>
+          <li class="list_shopping li_num_0_1">
+            <div class="col_md_1_list">
+              <p>In Progress</p>
+            </div>
+            <div class="col_md_2_list">
+              <h4>cho gà ăn</h4>
+              <p>ăn 11 lon thoi</p>
+            </div>
+            <div class="col_md_3_list">
+              <div class="cont_text_date">
+                  <p>20/9/2021</p>      
+              </div>    
+              <div class="cont_btns_options">
+                <ul>
+                    <li><a href="#" onclick="finish_action('0','0_1');"><i class="fas fa-trash-alt"></i></a></li>
+                    <li><a href="#" onclick="edit_action('0','0_1');"><i class="fas fa-edit"></i></a></li>
+                </ul>    
+              </div>
+            </div>
+          </li>
+        </ul>
+          <!--   End cont_todo_list_top  -->   
+      </div>
+            <!--   End cont_central  -->
+    </div>
+  </div>
+  <div class="login-success" style="top: 0px;left: 0px; display: none;">
+        <div>
+        </div>
+  </div>
+  <div class="login-fail" style="top: 0px;left: 0px; display: none;">
+    <div>
+    </div>
+  </div>
+   
+
+    <script  src="./assets/js/index.js"></script>
+</body>
+</html>
