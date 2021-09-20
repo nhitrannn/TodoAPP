@@ -1,136 +1,136 @@
-let userWorking =JSON.parse(localStorage.getItem("working")) 
-let isLive = JSON.parse(sessionStorage.getItem("live"))
-let arr = JSON.parse(localStorage.getItem("user")) || []
-let userNow = arr.find(obj=>obj.account==userWorking);
-let userTask = document.querySelectorAll('.form-control')
-let index = 0
-
-//check logged 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-function clearForm(){
-    for(let i = 0; i < userTask.length-1 ;i++){
-        userTask[i].value = ''
+// add new
+function addData() {
+    var users = [];
+    var users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
+    var userCurrent = localStorage.getItem('userCurrent') ? JSON.parse(localStorage.getItem('userCurrent')) : [];
+    let user = {
+        work: document.getElementById('work').value,
+        description: document.getElementById('description').value,
+        day: document.getElementById('day').value,
+        status: document.getElementById('status').value,
+        username: userCurrent.username
     }
+    users.push(user);
+
+    //check value empty
+
+    if (user.work === "" || user.description === "" || user.status === "", user.day === "") {
+        alert("Enter full information, Please!")
+        return
+    };
+
+    localStorage.setItem('users', JSON.stringify(users));
+    this.todo();
+    location.reload();
 }
 
-// logged
-async function checkLogged(){
-    if(!isLive){
-        showfailFormat("Bạn chưa đăng nhập")
-        await sleep(1000);
-        window.location.replace("http://127.0.0.1:5501/login.html")
-    }else{
-        document.querySelector('.user-infor').innerHTML =`<p>${userWorking}</p>`
+
+function todo() {
+    var userCurrent = localStorage.getItem('userCurrent') ? JSON.parse(localStorage.getItem('userCurrent')) : [];
+    var users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
+    if (users.length === 0) {
+        document.getElementById('list-user').style.display = 'none';
+        return false;
     }
+    document.getElementById('list-user').style.display = 'block';
+    var listUserHtml = `<tr>
+        <td>#</td>
+        <td>Name Project</td>
+        <td>Description</td>
+        <td>Deadline</td>
+        <td>Status</td>
+        <td>Actions</td>
+        </tr>`;
+
+    users.forEach((user, index) => {
+        if (user.username == userCurrent.username) {
+            listUserHtml += `<tr>
+            <td id = "idUser">${index}</td>
+            <td>${user.work}</td>
+            <td>${user.description}</td>
+            <td>${user.day}</td>
+            <td>${user.status}</td>
+            <td><button type='submit' class='btn btn-secondary btn-edit' onclick='editData(${index});'>Edit</button><button type='submit' class='btn btn-danger btn-delete' onclick='deleteData();'>Delete</button></td>
+            </tr>`;
+        }
+    })
+    document.getElementById('list-user').innerHTML = listUserHtml;
+
 }
-//logout
-async function logout(){
-    sessionStorage.setItem('live', 'false')
-    await sleep(500);
-    window.location.replace("http://127.0.0.1:5501/login.html")
-}
+var idUser;
 
-
-
-// listtodo
-
-var contador = 0
-,   select_opt = 0;
-
-function add_to_list(){
-var action = document.querySelector('#action_select').value,
-description = document.querySelector('.input_description').value, 
-title = document.querySelector('.input_title_desc').value,
-date = document.getElementById('date_select').value;
- 
-
-switch (action) {
-  case "In Progress":
- select_opt  = 0;
-    break;
-case "Completed":
-select_opt = 1; 
-    break;
-case "Pause":
- select_opt = 2;
-    break;
-}  
-  
-var class_li  =['list_shopping list_dsp_none',
-                'list_work list_dsp_none',
-                'list_sport list_dsp_none',
-                'list_music list_dsp_none'];  
-
-var cont = '<div class="col_md_1_list">    <p>'+action+'</p>    </div> <div class="col_md_2_list"> <h4>'+title+'</h4> <p>'+description+'</p> </div>    <div class="col_md_3_list"> <div class="cont_text_date"> <p>'+date+'</p>  </div>  <div class="cont_btns_options">   <ul><li><a href="#" onclick="finish_action('+select_opt+','+contador+');"><i class="fas fa-trash-alt"></i></a></li><li><a href="#" onclick="edit_action('+select_opt+','+contador+');"><i class="fas fa-edit"></i></a></li></ul>' ;
-var li = document.createElement('li')  
-li.className = class_li[select_opt]+" li_num_"+contador;
-
-li.innerHTML = cont;
-document.querySelectorAll('.cont_princ_lists > ul')[0].appendChild(li);
-
-setTimeout(function(){ 
-  document.querySelector('.li_num_'+contador).style.display = "block";
-  },100);
-  
-setTimeout(function(){
-  document.querySelector('.li_num_'+contador).className = "list_dsp_true "+class_li[select_opt]+" li_num_"+contador;
-contador++;
-  },200);
+function editData(id) {
+    var users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
+    users.forEach((users, index) => {
+        if (index === id) {
+            document.getElementById('work').value = users.work;
+            document.getElementById('description').value = users.description;
+            document.getElementById('day').value = users.day;
+            document.getElementById('status').value = users.status;
+            idUser = id;
+            document.getElementById('add').style.display = 'none'
+            document.getElementById('save').style.display = 'flex'
+        }
+    })
 
 }
 
-function finish_action(num,num2) {
-  var class_li  =['list_shopping list_dsp_true','list_work  list_dsp_true','list_sport list_dsp_true','list_music list_dsp_true'];   
-  console.log('.li_num_'+num2);
-  document.querySelector('.li_num_'+num2).className = class_li[num]+" list_finish_state"; 
-  setTimeout(function(){
-            del_finish();
-            },500);
+document.getElementById("save").addEventListener("click", function() {
+    saveData(idUser);
+});
+
+function saveData(id) {
+    var users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
+    var work = document.getElementById('work').value
+    var description = document.getElementById('description').value
+    var day = document.getElementById('day').value
+    var status = document.getElementById('status').value
+    users.forEach((users, index) => {
+        if (index == id) {
+            users.work = work;
+            users.description = description
+            users.day = day
+            users.status = status
+            alert('Saved!')
+        }
+    })
+    document.getElementById('add').style.display = 'flex'
+    document.getElementById('save').style.display = 'none'
+    localStorage.removeItem('users');
+    localStorage.setItem('users', JSON.stringify(users))
+    window.location.reload()
+    todo();
 }
 
-// function edit_action(num,num2) {
-//   var class_li  =['list_shopping list_dsp_true','list_work  list_dsp_true','list_sport list_dsp_true','list_music list_dsp_true'];   
-//   console.log('.li_num_'+num2);
-//   document.querySelector('.li_num_'+num2).className = class_li[num]+" list_edit_state"; 
-//   setTimeout(function(){
-//             edit_finish();
-//             },500);
-// }
+function deleteData(id) {
+    var users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
+    var status = true;
+    if (confirm("Are you want to delete?")) {
+        const index = users.indexOf(id);
+        users.splice(index, 1);
+    }
+    if (status == false) {
+        return status;
+    }
+    localStorage.removeItem("users")
+    localStorage.setItem('users', JSON.stringify(users))
+    location.reload();
 
-
-
-// delete
-function del_finish(){
-  var li = document.querySelectorAll('.list_finish_state');
-      for(var e = 0; e < li.length; e++){
-  /* li[e].style.left = "-100px"; */    
-  li[e].style.opacity = "0";
-  li[e].style.height = "0px";      
-  li[e].style.margin = "0px";      
-      }
-
-setTimeout(function(){
-  var li = document.querySelectorAll('.list_finish_state');
-      for(var e = 0; e < li.length; e++){
-      li[e].parentNode.removeChild(li[e]); 
-      }
-  },500);
-  
-
-  
 }
-var t = 0;
-function add_new(){  
-if(t % 2 == 0){  
- document.querySelector('.cont_crear_new').className = "cont_crear_new cont_crear_new_active";
 
-  document.querySelector('.cont_add_titulo_cont').className = "cont_add_titulo_cont cont_add_titulo_cont_active";
-  t++;
-}else {  document.querySelector('.cont_crear_new').className = "cont_crear_new";
-document.querySelector('.cont_add_titulo_cont').className = "cont_add_titulo_cont";  
-  t++;
-  } 
+function Logout() {
+    localStorage.removeItem('username');
+    localStorage.removeItem('mail');
+    localStorage.removeItem('userCurrent');
+    window.location.href = "http://127.0.0.1:5501/login.html";
+
 }
+
+
+
+//pagination
+$('#paging').pagination({
+    dataSource: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    pageSize: 5,
+
+})

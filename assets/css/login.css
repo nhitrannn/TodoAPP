@@ -159,7 +159,7 @@ h5:hover{
 }
 .login-input .invalid .wrong-message{
   display:block;
-  color: #808080;
+  color: red;
 }
 .login-input .invalid p:before{
   background-color:red;
